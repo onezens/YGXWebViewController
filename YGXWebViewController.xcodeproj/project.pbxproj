@@ -10,11 +10,11 @@
 		356B645B1FCD66C3005EF93D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356B64591FCD6678005EF93D /* MobileCoreServices.framework */; };
 		356B645C1FCD66C5005EF93D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356B64571FCD6593005EF93D /* WebKit.framework */; };
 		35B802071FC030D8007B24C0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B802061FC030D8007B24C0 /* AppDelegate.m */; };
-		35B8020A1FC030D8007B24C0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B802091FC030D8007B24C0 /* ViewController.m */; };
 		35B8020F1FC030D8007B24C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B8020E1FC030D8007B24C0 /* Assets.xcassets */; };
 		35B802151FC030D8007B24C0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B802141FC030D8007B24C0 /* main.m */; };
 		35B8021D1FC03199007B24C0 /* YGXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B8021C1FC03199007B24C0 /* YGXWebViewController.m */; };
 		35B802211FC033BC007B24C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35B802201FC033BC007B24C0 /* LaunchScreen.storyboard */; };
+		35E119D820EC6DCB00B30D26 /* YGXWebListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E119D720EC6DCB00B30D26 /* YGXWebListController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,14 +23,14 @@
 		35B802021FC030D8007B24C0 /* YGXWebViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YGXWebViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35B802051FC030D8007B24C0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		35B802061FC030D8007B24C0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		35B802081FC030D8007B24C0 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		35B802091FC030D8007B24C0 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		35B8020E1FC030D8007B24C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		35B802131FC030D8007B24C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		35B802141FC030D8007B24C0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		35B8021B1FC03199007B24C0 /* YGXWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YGXWebViewController.h; sourceTree = "<group>"; };
 		35B8021C1FC03199007B24C0 /* YGXWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YGXWebViewController.m; sourceTree = "<group>"; };
 		35B802201FC033BC007B24C0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		35E119D620EC6DCB00B30D26 /* YGXWebListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YGXWebListController.h; sourceTree = "<group>"; };
+		35E119D720EC6DCB00B30D26 /* YGXWebListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YGXWebListController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,10 +77,10 @@
 			children = (
 				35B802051FC030D8007B24C0 /* AppDelegate.h */,
 				35B802061FC030D8007B24C0 /* AppDelegate.m */,
+				35E119D620EC6DCB00B30D26 /* YGXWebListController.h */,
+				35E119D720EC6DCB00B30D26 /* YGXWebListController.m */,
 				35B8021B1FC03199007B24C0 /* YGXWebViewController.h */,
 				35B8021C1FC03199007B24C0 /* YGXWebViewController.m */,
-				35B802081FC030D8007B24C0 /* ViewController.h */,
-				35B802091FC030D8007B24C0 /* ViewController.m */,
 				35B8020E1FC030D8007B24C0 /* Assets.xcassets */,
 				35B802201FC033BC007B24C0 /* LaunchScreen.storyboard */,
 				35B802131FC030D8007B24C0 /* Info.plist */,
@@ -160,8 +160,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35B8020A1FC030D8007B24C0 /* ViewController.m in Sources */,
 				35B802151FC030D8007B24C0 /* main.m in Sources */,
+				35E119D820EC6DCB00B30D26 /* YGXWebListController.m in Sources */,
 				35B8021D1FC03199007B24C0 /* YGXWebViewController.m in Sources */,
 				35B802071FC030D8007B24C0 /* AppDelegate.m in Sources */,
 			);

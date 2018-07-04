@@ -7,8 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
-#import "YGXWebViewController.h"
+#import "YGXWebListController.h"
 
 @interface AppDelegate ()
 
@@ -21,8 +20,7 @@
     
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    YGXWebViewController *vc = [[YGXWebViewController alloc] init];
-    vc.url = @"https://www.baidu.com/";
+    YGXWebListController *vc = [[YGXWebListController alloc] init];
     UINavigationController *rootVc = [[UINavigationController alloc] initWithRootViewController:vc];
     rootVc.view.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = rootVc;
