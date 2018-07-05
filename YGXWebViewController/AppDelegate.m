@@ -8,7 +8,8 @@
 
 #import "AppDelegate.h"
 #import "YGXWebListController.h"
-
+#import "YGXURLProtocol.h"
+#import "NSURLProtocol+WebKitSupport.h"
 @interface AppDelegate ()
 
 @end
@@ -18,6 +19,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [NSURLProtocol registerClass:[YGXURLProtocol class]];
+    [NSURLProtocol wk_registerScheme:@"http"];
+    [NSURLProtocol wk_registerScheme:@"https"];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     YGXWebListController *vc = [[YGXWebListController alloc] init];

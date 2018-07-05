@@ -8,6 +8,7 @@
 
 #import "YGXWebViewController.h"
 #import <WebKit/WebKit.h>
+#import "YGXURLProtocol.h"
 
 static NSUInteger const kWKWebView_TimeOut = 60;
 
@@ -20,7 +21,6 @@ static NSUInteger const kWKWebView_TimeOut = 60;
 @implementation YGXWebViewController
 
 #pragma mark - init
-
 
 #pragma mark - ui
 
@@ -44,6 +44,7 @@ static NSUInteger const kWKWebView_TimeOut = 60;
 - (void)setUrl:(NSString *)url {
     _url = url;
     NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kWKWebView_TimeOut];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:(NSURLRequestCachePolicy) timeoutInterval:<#(NSTimeInterval)#>]
     [self.webView loadRequest:req];
 }
 
@@ -126,12 +127,12 @@ static NSUInteger const kWKWebView_TimeOut = 60;
 }
 
 
-- (BOOL)webView:(WKWebView *)webView shouldPreviewElement:(WKPreviewElementInfo *)elementInfo{
+- (BOOL)webView:(WKWebView *)webView shouldPreviewElement:(WKPreviewElementInfo *)elementInfo API_AVAILABLE(ios(10.0)){
     NSLog(@"%s", __FUNCTION__);
     return true;
 }
 
-- (nullable UIViewController *)webView:(WKWebView *)webView previewingViewControllerForElement:(WKPreviewElementInfo *)elementInfo defaultActions:(NSArray<id <WKPreviewActionItem>> *)previewActions {
+- (nullable UIViewController *)webView:(WKWebView *)webView previewingViewControllerForElement:(WKPreviewElementInfo *)elementInfo defaultActions:(NSArray<id <WKPreviewActionItem>> *)previewActions  API_AVAILABLE(ios(10.0)){
     
     NSLog(@"%s", __FUNCTION__);
     

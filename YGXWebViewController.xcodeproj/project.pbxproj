@@ -15,6 +15,8 @@
 		35B8021D1FC03199007B24C0 /* YGXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B8021C1FC03199007B24C0 /* YGXWebViewController.m */; };
 		35B802211FC033BC007B24C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35B802201FC033BC007B24C0 /* LaunchScreen.storyboard */; };
 		35E119D820EC6DCB00B30D26 /* YGXWebListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E119D720EC6DCB00B30D26 /* YGXWebListController.m */; };
+		35E119DB20EC729500B30D26 /* YGXURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E119DA20EC729500B30D26 /* YGXURLProtocol.m */; };
+		35E119E120EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E119E020EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,10 @@
 		35B802201FC033BC007B24C0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		35E119D620EC6DCB00B30D26 /* YGXWebListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YGXWebListController.h; sourceTree = "<group>"; };
 		35E119D720EC6DCB00B30D26 /* YGXWebListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YGXWebListController.m; sourceTree = "<group>"; };
+		35E119D920EC729500B30D26 /* YGXURLProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YGXURLProtocol.h; sourceTree = "<group>"; };
+		35E119DA20EC729500B30D26 /* YGXURLProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YGXURLProtocol.m; sourceTree = "<group>"; };
+		35E119DF20EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLProtocol+WebKitSupport.h"; sourceTree = "<group>"; };
+		35E119E020EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLProtocol+WebKitSupport.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,18 +81,38 @@
 		35B802041FC030D8007B24C0 /* YGXWebViewController */ = {
 			isa = PBXGroup;
 			children = (
+				35E119E320EDC7C300B30D26 /* ThirdLib */,
+				35E119E220EDC7A200B30D26 /* WebView */,
 				35B802051FC030D8007B24C0 /* AppDelegate.h */,
 				35B802061FC030D8007B24C0 /* AppDelegate.m */,
-				35E119D620EC6DCB00B30D26 /* YGXWebListController.h */,
-				35E119D720EC6DCB00B30D26 /* YGXWebListController.m */,
-				35B8021B1FC03199007B24C0 /* YGXWebViewController.h */,
-				35B8021C1FC03199007B24C0 /* YGXWebViewController.m */,
 				35B8020E1FC030D8007B24C0 /* Assets.xcassets */,
 				35B802201FC033BC007B24C0 /* LaunchScreen.storyboard */,
 				35B802131FC030D8007B24C0 /* Info.plist */,
 				35B802141FC030D8007B24C0 /* main.m */,
 			);
 			path = YGXWebViewController;
+			sourceTree = "<group>";
+		};
+		35E119E220EDC7A200B30D26 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				35E119D920EC729500B30D26 /* YGXURLProtocol.h */,
+				35E119DA20EC729500B30D26 /* YGXURLProtocol.m */,
+				35E119D620EC6DCB00B30D26 /* YGXWebListController.h */,
+				35E119D720EC6DCB00B30D26 /* YGXWebListController.m */,
+				35B8021B1FC03199007B24C0 /* YGXWebViewController.h */,
+				35B8021C1FC03199007B24C0 /* YGXWebViewController.m */,
+				35E119DF20EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.h */,
+				35E119E020EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.m */,
+			);
+			path = WebView;
+			sourceTree = "<group>";
+		};
+		35E119E320EDC7C300B30D26 /* ThirdLib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ThirdLib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -116,7 +142,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = YGX;
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = wz;
 				TargetAttributes = {
 					35B802011FC030D8007B24C0 = {
@@ -164,6 +190,8 @@
 				35E119D820EC6DCB00B30D26 /* YGXWebListController.m in Sources */,
 				35B8021D1FC03199007B24C0 /* YGXWebViewController.m in Sources */,
 				35B802071FC030D8007B24C0 /* AppDelegate.m in Sources */,
+				35E119E120EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.m in Sources */,
+				35E119DB20EC729500B30D26 /* YGXURLProtocol.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +212,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -191,6 +220,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -239,6 +269,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -246,6 +277,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
