@@ -44,7 +44,8 @@ static NSString * const KYGXURLProtocol = @"KYGXURLProtocol";
     NSMutableURLRequest *mutableReqeust = [[self request] mutableCopy];
     //给我们处理过的请求设置一个标识符, 防止无限循环,
     [NSURLProtocol setProperty:@YES forKey:KYGXURLProtocol inRequest:mutableReqeust];
-    if ([YGXDiskCache containDataForKey:mutableReqeust.URL.absoluteString]) {
+    NSString *url = mutableReqeust.URL.absoluteString;
+    if ([self isMediaSrc:url] && [YGXDiskCache containDataForKey:url]) {
         YGXDCObject *dco = [YGXDiskCache getDataForKey:mutableReqeust.URL.absoluteString];
         NSData* data = dco.originData;
         NSURLResponse* response = [[NSURLResponse alloc] initWithURL:self.request.URL MIMEType:dco.mimeType expectedContentLength:data.length textEncodingName:nil];
@@ -57,6 +58,18 @@ static NSString * const KYGXURLProtocol = @"KYGXURLProtocol";
         [self.task resume];
     }
     
+}
+
+- (BOOL)isMediaSrc:(NSString *)url {
+    NSString *srcUrl = [url lowercaseString];
+    if ([srcUrl containsString:@"png"] || [srcUrl containsString:@"gif"] || [srcUrl containsString:@"jpeg"] || [srcUrl containsString:@"webp"] ) {
+        return true;
+    }
+    if ([srcUrl containsString:@"mp4"] || [srcUrl containsString:@"avi"] || [srcUrl containsString:@"mov"]) {
+        return true;
+    }
+    
+    return false;
 }
 - (void)stopLoading
 {

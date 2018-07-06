@@ -43,8 +43,7 @@ static NSUInteger const kWKWebView_TimeOut = 60;
 
 - (void)setUrl:(NSString *)url {
     _url = url;
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kWKWebView_TimeOut];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:(NSURLRequestCachePolicy) timeoutInterval:<#(NSTimeInterval)#>]
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:kWKWebView_TimeOut];
     [self.webView loadRequest:req];
 }
 
