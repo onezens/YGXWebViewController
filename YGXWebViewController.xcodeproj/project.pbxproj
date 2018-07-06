@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3533C5FD20EF7682004074D1 /* YGXUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3533C5FC20EF7682004074D1 /* YGXUtils.m */; };
 		356B645B1FCD66C3005EF93D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356B64591FCD6678005EF93D /* MobileCoreServices.framework */; };
 		356B645C1FCD66C5005EF93D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356B64571FCD6593005EF93D /* WebKit.framework */; };
 		35B802071FC030D8007B24C0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B802061FC030D8007B24C0 /* AppDelegate.m */; };
@@ -17,9 +18,13 @@
 		35E119D820EC6DCB00B30D26 /* YGXWebListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E119D720EC6DCB00B30D26 /* YGXWebListController.m */; };
 		35E119DB20EC729500B30D26 /* YGXURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E119DA20EC729500B30D26 /* YGXURLProtocol.m */; };
 		35E119E120EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E119E020EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.m */; };
+		35E119E720EDCBFD00B30D26 /* YGXDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E119E620EDCBFD00B30D26 /* YGXDiskCache.m */; };
+		38C4A02D5439AAD879E0E5E2 /* libPods-YGXWebViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB39C2A81A34104BCE11D01 /* libPods-YGXWebViewController.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3533C5FB20EF7682004074D1 /* YGXUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YGXUtils.h; sourceTree = "<group>"; };
+		3533C5FC20EF7682004074D1 /* YGXUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YGXUtils.m; sourceTree = "<group>"; };
 		356B64571FCD6593005EF93D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		356B64591FCD6678005EF93D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		35B802021FC030D8007B24C0 /* YGXWebViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YGXWebViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -37,6 +42,11 @@
 		35E119DA20EC729500B30D26 /* YGXURLProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YGXURLProtocol.m; sourceTree = "<group>"; };
 		35E119DF20EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLProtocol+WebKitSupport.h"; sourceTree = "<group>"; };
 		35E119E020EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLProtocol+WebKitSupport.m"; sourceTree = "<group>"; };
+		35E119E520EDCBFD00B30D26 /* YGXDiskCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YGXDiskCache.h; sourceTree = "<group>"; };
+		35E119E620EDCBFD00B30D26 /* YGXDiskCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YGXDiskCache.m; sourceTree = "<group>"; };
+		4C68788AD0436E1E0595BC81 /* Pods-YGXWebViewController.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YGXWebViewController.release.xcconfig"; path = "Pods/Target Support Files/Pods-YGXWebViewController/Pods-YGXWebViewController.release.xcconfig"; sourceTree = "<group>"; };
+		659DB0898CF4B3F032D144CE /* Pods-YGXWebViewController.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YGXWebViewController.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YGXWebViewController/Pods-YGXWebViewController.debug.xcconfig"; sourceTree = "<group>"; };
+		DAB39C2A81A34104BCE11D01 /* libPods-YGXWebViewController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YGXWebViewController.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,17 +56,28 @@
 			files = (
 				356B645C1FCD66C5005EF93D /* WebKit.framework in Frameworks */,
 				356B645B1FCD66C3005EF93D /* MobileCoreServices.framework in Frameworks */,
+				38C4A02D5439AAD879E0E5E2 /* libPods-YGXWebViewController.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		30269DB1FF15B167AC94770F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				659DB0898CF4B3F032D144CE /* Pods-YGXWebViewController.debug.xcconfig */,
+				4C68788AD0436E1E0595BC81 /* Pods-YGXWebViewController.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		356B64561FCD6593005EF93D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				356B64591FCD6678005EF93D /* MobileCoreServices.framework */,
 				356B64571FCD6593005EF93D /* WebKit.framework */,
+				DAB39C2A81A34104BCE11D01 /* libPods-YGXWebViewController.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -67,6 +88,7 @@
 				35B802041FC030D8007B24C0 /* YGXWebViewController */,
 				35B802031FC030D8007B24C0 /* Products */,
 				356B64561FCD6593005EF93D /* Frameworks */,
+				30269DB1FF15B167AC94770F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,8 +103,9 @@
 		35B802041FC030D8007B24C0 /* YGXWebViewController */ = {
 			isa = PBXGroup;
 			children = (
+				35E119E420EDCBE700B30D26 /* Utils */,
 				35E119E320EDC7C300B30D26 /* ThirdLib */,
-				35E119E220EDC7A200B30D26 /* WebView */,
+				35E119E220EDC7A200B30D26 /* WKWebView */,
 				35B802051FC030D8007B24C0 /* AppDelegate.h */,
 				35B802061FC030D8007B24C0 /* AppDelegate.m */,
 				35B8020E1FC030D8007B24C0 /* Assets.xcassets */,
@@ -93,7 +116,7 @@
 			path = YGXWebViewController;
 			sourceTree = "<group>";
 		};
-		35E119E220EDC7A200B30D26 /* WebView */ = {
+		35E119E220EDC7A200B30D26 /* WKWebView */ = {
 			isa = PBXGroup;
 			children = (
 				35E119D920EC729500B30D26 /* YGXURLProtocol.h */,
@@ -105,7 +128,7 @@
 				35E119DF20EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.h */,
 				35E119E020EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.m */,
 			);
-			path = WebView;
+			path = WKWebView;
 			sourceTree = "<group>";
 		};
 		35E119E320EDC7C300B30D26 /* ThirdLib */ = {
@@ -115,6 +138,17 @@
 			path = ThirdLib;
 			sourceTree = "<group>";
 		};
+		35E119E420EDCBE700B30D26 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3533C5FB20EF7682004074D1 /* YGXUtils.h */,
+				3533C5FC20EF7682004074D1 /* YGXUtils.m */,
+				35E119E520EDCBFD00B30D26 /* YGXDiskCache.h */,
+				35E119E620EDCBFD00B30D26 /* YGXDiskCache.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -122,6 +156,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 35B802181FC030D8007B24C0 /* Build configuration list for PBXNativeTarget "YGXWebViewController" */;
 			buildPhases = (
+				0D939F92C19E3F98ECA3ED3D /* [CP] Check Pods Manifest.lock */,
 				35B801FE1FC030D8007B24C0 /* Sources */,
 				35B801FF1FC030D8007B24C0 /* Frameworks */,
 				35B802001FC030D8007B24C0 /* Resources */,
@@ -147,12 +182,13 @@
 				TargetAttributes = {
 					35B802011FC030D8007B24C0 = {
 						CreatedOnToolsVersion = 9.1;
+						DevelopmentTeam = J4N8RS9Y8V;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = 35B801FD1FC030D8007B24C0 /* Build configuration list for PBXProject "YGXWebViewController" */;
-			compatibilityVersion = "Xcode 8.0";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -181,6 +217,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0D939F92C19E3F98ECA3ED3D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YGXWebViewController-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		35B801FE1FC030D8007B24C0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -188,9 +245,11 @@
 			files = (
 				35B802151FC030D8007B24C0 /* main.m in Sources */,
 				35E119D820EC6DCB00B30D26 /* YGXWebListController.m in Sources */,
+				3533C5FD20EF7682004074D1 /* YGXUtils.m in Sources */,
 				35B8021D1FC03199007B24C0 /* YGXWebViewController.m in Sources */,
 				35B802071FC030D8007B24C0 /* AppDelegate.m in Sources */,
 				35E119E120EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.m in Sources */,
+				35E119E720EDCBFD00B30D26 /* YGXDiskCache.m in Sources */,
 				35E119DB20EC729500B30D26 /* YGXURLProtocol.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,7 +307,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -299,7 +358,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -308,6 +367,7 @@
 		};
 		35B802191FC030D8007B24C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 659DB0898CF4B3F032D144CE /* Pods-YGXWebViewController.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -315,7 +375,7 @@
 				INFOPLIST_FILE = YGXWebViewController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cc.onezen.YGXWebViewController;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.onezen.YGXBroswer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -323,6 +383,7 @@
 		};
 		35B8021A1FC030D8007B24C0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C68788AD0436E1E0595BC81 /* Pods-YGXWebViewController.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -330,7 +391,7 @@
 				INFOPLIST_FILE = YGXWebViewController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cc.onezen.YGXWebViewController;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.onezen.YGXBroswer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

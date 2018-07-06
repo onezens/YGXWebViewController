@@ -7,8 +7,9 @@
 //
 
 #import "YGXURLProtocol.h"
+#import "YGXDiskCache.h"
 
-static NSString * const KHybridNSURLProtocolHKey = @"KHybridNSURLProtocol";
+static NSString * const KYGXURLProtocol = @"KYGXURLProtocol";
 
 @interface YGXURLProtocol()<NSURLSessionDelegate>
 @property (nonnull,strong) NSURLSessionDataTask *task;
@@ -22,7 +23,7 @@ static NSString * const KHybridNSURLProtocolHKey = @"KHybridNSURLProtocol";
     NSString *scheme = [[request URL] scheme];
     if (([scheme caseInsensitiveCompare:@"http"] == NSOrderedSame || [scheme caseInsensitiveCompare:@"https"] == NSOrderedSame )) {
         //看看是否已经处理过了，防止无限循环
-        if ([NSURLProtocol propertyForKey:KHybridNSURLProtocolHKey inRequest:request])
+        if ([NSURLProtocol propertyForKey:KYGXURLProtocol inRequest:request])
             return NO;
         return YES;
     }
@@ -42,21 +43,20 @@ static NSString * const KHybridNSURLProtocolHKey = @"KHybridNSURLProtocol";
 - (void)startLoading {
     NSMutableURLRequest *mutableReqeust = [[self request] mutableCopy];
     //给我们处理过的请求设置一个标识符, 防止无限循环,
-    [NSURLProtocol setProperty:@YES forKey:KHybridNSURLProtocolHKey inRequest:mutableReqeust];
-    
-    //这里最好加上缓存判断，加载本地离线文件， 这个直接简单的例子。
-    if ([mutableReqeust.URL.absoluteString isEqualToString:@""])
-    {
-        NSData* data = UIImagePNGRepresentation([UIImage imageNamed:@"medlinker"]);
-        NSURLResponse* response = [[NSURLResponse alloc] initWithURL:self.request.URL MIMEType:@"image/png" expectedContentLength:data.length textEncodingName:nil];
+    [NSURLProtocol setProperty:@YES forKey:KYGXURLProtocol inRequest:mutableReqeust];
+    if ([YGXDiskCache containDataForKey:mutableReqeust.URL.absoluteString]) {
+        YGXDCObject *dco = [YGXDiskCache getDataForKey:mutableReqeust.URL.absoluteString];
+        NSData* data = dco.originData;
+        NSURLResponse* response = [[NSURLResponse alloc] initWithURL:self.request.URL MIMEType:dco.mimeType expectedContentLength:data.length textEncodingName:nil];
         [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
         [self.client URLProtocol:self didLoadData:data];
         [self.client URLProtocolDidFinishLoading:self];
-    } else {
+    }else{
         NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
         self.task = [session dataTaskWithRequest:self.request];
         [self.task resume];
     }
+    
 }
 - (void)stopLoading
 {
@@ -75,6 +75,10 @@ static NSString * const KHybridNSURLProtocolHKey = @"KHybridNSURLProtocol";
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     [[self client] URLProtocol:self didLoadData:data];
+    NSURLResponse *res = dataTask.response;
+    NSString *url = dataTask.originalRequest.URL.absoluteString;
+    YGXDCObject *dco = [YGXDCObject diskCacheObjWithData:data mimeType:res.MIMEType];
+    [YGXDiskCache cacheData:dco withKey:url];
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error {
