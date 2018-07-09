@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3533C5FD20EF7682004074D1 /* YGXUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3533C5FC20EF7682004074D1 /* YGXUtils.m */; };
+		3533C5FF20F34007004074D1 /* YGXWebBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3533C5FE20F34007004074D1 /* YGXWebBarView.xib */; };
+		3533C60520F341C7004074D1 /* YGXWebViewBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3533C60420F341C7004074D1 /* YGXWebViewBar.m */; };
 		356B645B1FCD66C3005EF93D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356B64591FCD6678005EF93D /* MobileCoreServices.framework */; };
 		356B645C1FCD66C5005EF93D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356B64571FCD6593005EF93D /* WebKit.framework */; };
 		35B802071FC030D8007B24C0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B802061FC030D8007B24C0 /* AppDelegate.m */; };
@@ -25,6 +27,9 @@
 /* Begin PBXFileReference section */
 		3533C5FB20EF7682004074D1 /* YGXUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YGXUtils.h; sourceTree = "<group>"; };
 		3533C5FC20EF7682004074D1 /* YGXUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YGXUtils.m; sourceTree = "<group>"; };
+		3533C5FE20F34007004074D1 /* YGXWebBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YGXWebBarView.xib; sourceTree = "<group>"; };
+		3533C60320F341C7004074D1 /* YGXWebViewBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YGXWebViewBar.h; sourceTree = "<group>"; };
+		3533C60420F341C7004074D1 /* YGXWebViewBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YGXWebViewBar.m; sourceTree = "<group>"; };
 		356B64571FCD6593005EF93D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		356B64591FCD6678005EF93D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		35B802021FC030D8007B24C0 /* YGXWebViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YGXWebViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +132,9 @@
 				35B8021C1FC03199007B24C0 /* YGXWebViewController.m */,
 				35E119DF20EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.h */,
 				35E119E020EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.m */,
+				3533C5FE20F34007004074D1 /* YGXWebBarView.xib */,
+				3533C60320F341C7004074D1 /* YGXWebViewBar.h */,
+				3533C60420F341C7004074D1 /* YGXWebViewBar.m */,
 			);
 			path = WKWebView;
 			sourceTree = "<group>";
@@ -210,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3533C5FF20F34007004074D1 /* YGXWebBarView.xib in Resources */,
 				35B8020F1FC030D8007B24C0 /* Assets.xcassets in Resources */,
 				35B802211FC033BC007B24C0 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -246,6 +255,7 @@
 				35B802151FC030D8007B24C0 /* main.m in Sources */,
 				35E119D820EC6DCB00B30D26 /* YGXWebListController.m in Sources */,
 				3533C5FD20EF7682004074D1 /* YGXUtils.m in Sources */,
+				3533C60520F341C7004074D1 /* YGXWebViewBar.m in Sources */,
 				35B8021D1FC03199007B24C0 /* YGXWebViewController.m in Sources */,
 				35B802071FC030D8007B24C0 /* AppDelegate.m in Sources */,
 				35E119E120EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.m in Sources */,
@@ -373,7 +383,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J4N8RS9Y8V;
 				INFOPLIST_FILE = YGXWebViewController/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cc.onezen.YGXBroswer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -389,7 +399,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J4N8RS9Y8V;
 				INFOPLIST_FILE = YGXWebViewController/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cc.onezen.YGXBroswer;
 				PRODUCT_NAME = "$(TARGET_NAME)";

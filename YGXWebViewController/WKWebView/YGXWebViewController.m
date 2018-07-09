@@ -9,12 +9,15 @@
 #import "YGXWebViewController.h"
 #import <WebKit/WebKit.h>
 #import "YGXURLProtocol.h"
+#import "YGXWebViewBar.h"
 
 static NSUInteger const kWKWebView_TimeOut = 60;
+static NSUInteger const WebViewBarHeight = 44;
 
-@interface YGXWebViewController()<WKUIDelegate, WKNavigationDelegate>
+@interface YGXWebViewController()<WKUIDelegate, WKNavigationDelegate, YGXWebViewBarDelegate>
 
 @property (nonatomic, strong) WKWebView *webView;
+@property (nonatomic, weak) YGXWebViewBar *webBar;
 
 @end
 
@@ -32,11 +35,32 @@ static NSUInteger const kWKWebView_TimeOut = 60;
 - (void)initUI {
     self.title = @"YGXWebVC";
     self.view.backgroundColor = [UIColor whiteColor];
+    YGXWebViewBar *bar = [YGXWebViewBar webViewBar];
+    bar.frame = CGRectMake(0, self.view.bounds.size.height - WebViewBarHeight, self.view.bounds.size.width, WebViewBarHeight);
+    bar.delegate = self;
+    _webBar = bar;
+    [self.view addSubview:bar];
+}
+
+#pragma mark - webView event
+- (void)backBtnClick:(UIButton *)sender {
+    [self.webView goBack];
+}
+- (void)forwardBtnClick:(UIButton *)sender {
+    [self.webView goForward];
+}
+- (void)saveBtnClick:(UIButton *)sender {
+    
+}
+- (void)saveListBtnClick:(UIButton *)sender {
+    
+}
+- (void)newBtnClick:(UIButton *)sender{
+    
 }
 
 
 #pragma mark - network
-
 
 
 #pragma mark - event
@@ -51,8 +75,7 @@ static NSUInteger const kWKWebView_TimeOut = 60;
 #pragma mark - WKNavigationDelegate
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
-    NSURLRequest *request = navigationAction.request;
-    NSLog(@"request url: %@", request.URL.absoluteString);
+//    NSURLRequest *request = navigationAction.request;
     if(decisionHandler){
         decisionHandler(WKNavigationActionPolicyAllow);
     }
@@ -61,8 +84,7 @@ static NSUInteger const kWKWebView_TimeOut = 60;
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     NSURLResponse *response = navigationResponse.response;
     if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-        NSHTTPURLResponse *httpRes = (NSHTTPURLResponse *)response;
-        NSLog(@"response: %@", httpRes.allHeaderFields);
+//        NSHTTPURLResponse *httpRes = (NSHTTPURLResponse *)response;
     }else{
         NSLog(@"response: %@", [response class]);
     }
@@ -87,24 +109,30 @@ static NSUInteger const kWKWebView_TimeOut = 60;
 
 - (void)webView:(WKWebView *)webView didCommitNavigation:(null_unspecified WKNavigation *)navigation {
     NSLog(@"%s", __FUNCTION__);
+    self.webBar.gobackBtn.enabled = webView.canGoBack;
+    self.webBar.goForwardBtn.enabled = webView.canGoForward;
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation{
     [UIApplication sharedApplication].networkActivityIndicatorVisible = false;
+    [webView evaluateJavaScript:@"document.title" completionHandler:^(NSString * result, NSError * _Nullable error) {
+        if (result.length>15) {
+            result = [result substringWithRange:NSMakeRange(0, 15)];
+        }
+        self.title = result;
+    }];
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error{
     [UIApplication sharedApplication].networkActivityIndicatorVisible = false;
 }
 
-
-
 #pragma mark - WKUIDelegate
 
 - (nullable WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures{
     
     NSLog(@"%s", __FUNCTION__);
-    return [[WKWebView alloc] initWithFrame:self.view.bounds];
+    return [[WKWebView alloc] initWithFrame:self.webView.bounds];
 }
 
 - (void)webViewDidClose:(WKWebView *)webView {
@@ -156,10 +184,11 @@ static NSUInteger const kWKWebView_TimeOut = 60;
 - (WKWebView *)webView {
     
     if (!_webView) {
-        _webView = [[WKWebView alloc] initWithFrame:self.view.bounds];
+        _webView = [[WKWebView alloc] init];
         _webView.backgroundColor = [UIColor orangeColor];
         _webView.UIDelegate = self;
         _webView.navigationDelegate = self;
+        _webView.frame = CGRectMake(0, 64.0f, self.view.bounds.size.width, self.view.bounds.size.height - 64.0f - WebViewBarHeight);
         [self.view addSubview:_webView];
     }
     return _webView;

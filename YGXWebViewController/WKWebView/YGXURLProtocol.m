@@ -19,21 +19,23 @@ static NSString * const KYGXURLProtocol = @"KYGXURLProtocol";
 
 //是否需要处理request请求
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
-    NSLog(@"request URL: %@",request.URL.absoluteString);
     NSString *scheme = [[request URL] scheme];
     if (([scheme caseInsensitiveCompare:@"http"] == NSOrderedSame || [scheme caseInsensitiveCompare:@"https"] == NSOrderedSame )) {
+        NSString *urlStr = request.URL.absoluteString;
+        if (![self isMediaSrc:urlStr]) {
+            return false;
+        }
         //看看是否已经处理过了，防止无限循环
         if ([NSURLProtocol propertyForKey:KYGXURLProtocol inRequest:request])
-            return NO;
-        return YES;
+            return false;
+        return true;
     }
-    return NO;
+    return false;
 }
 
 //处理request请求
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request{
-    NSMutableURLRequest *mutableReqeust = [request mutableCopy];
-    return mutableReqeust;
+    return request;
 }
 
 + (BOOL)requestIsCacheEquivalent:(NSURLRequest *)a toRequest:(NSURLRequest *)b{
@@ -45,7 +47,7 @@ static NSString * const KYGXURLProtocol = @"KYGXURLProtocol";
     //给我们处理过的请求设置一个标识符, 防止无限循环,
     [NSURLProtocol setProperty:@YES forKey:KYGXURLProtocol inRequest:mutableReqeust];
     NSString *url = mutableReqeust.URL.absoluteString;
-    if ([self isMediaSrc:url] && [YGXDiskCache containDataForKey:url]) {
+    if ([YGXDiskCache containDataForKey:url]) {
         YGXDCObject *dco = [YGXDiskCache getDataForKey:mutableReqeust.URL.absoluteString];
         NSData* data = dco.originData;
         NSURLResponse* response = [[NSURLResponse alloc] initWithURL:self.request.URL MIMEType:dco.mimeType expectedContentLength:data.length textEncodingName:nil];
@@ -60,7 +62,7 @@ static NSString * const KYGXURLProtocol = @"KYGXURLProtocol";
     
 }
 
-- (BOOL)isMediaSrc:(NSString *)url {
++ (BOOL)isMediaSrc:(NSString *)url {
     NSString *srcUrl = [url lowercaseString];
     if ([srcUrl containsString:@"png"] || [srcUrl containsString:@"gif"] || [srcUrl containsString:@"jpeg"] || [srcUrl containsString:@"webp"] ) {
         return true;
@@ -88,13 +90,28 @@ static NSString * const KYGXURLProtocol = @"KYGXURLProtocol";
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     [[self client] URLProtocol:self didLoadData:data];
-    NSURLResponse *res = dataTask.response;
-    NSString *url = dataTask.originalRequest.URL.absoluteString;
-    YGXDCObject *dco = [YGXDCObject diskCacheObjWithData:data mimeType:res.MIMEType];
-    [YGXDiskCache cacheData:dco withKey:url];
+    if ([dataTask.response isKindOfClass:[NSHTTPURLResponse class]]) {
+        NSHTTPURLResponse *res = (NSHTTPURLResponse *)dataTask.response;
+        NSString *url = dataTask.originalRequest.URL.absoluteString;
+        if (res.statusCode == 200) {
+            YGXDCObject *dco = [YGXDCObject diskCacheObjWithData:data mimeType:res.MIMEType];
+            [YGXDiskCache cacheData:dco withKey:url];
+            return;
+        }else if (res.statusCode == 206){
+            NSLog(@"range: %@", res.allHeaderFields);
+            [self.client URLProtocol:self didLoadData:data];
+            return;
+        }
+        NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"[didReceiveData Error] statusCode: %zd  data: %@", res.statusCode, dataStr);
+    }
+    
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error {
+    if (error) {
+        NSLog(@"[didCompleteWithError]: %@", error);
+    }
     [self.client URLProtocolDidFinishLoading:self];
 }
 
