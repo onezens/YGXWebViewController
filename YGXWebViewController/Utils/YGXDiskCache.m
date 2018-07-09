@@ -11,6 +11,9 @@
 
 #import <YYCache.h>
 
+@interface YGXDCObject()
+@end
+
 #pragma mark -  YGXDCObject
 
 @implementation YGXDCObject
@@ -139,12 +142,30 @@ static YGXDiskCache *_instance;
     [self saveData:data path:path];
 }
 
+- (void)saveAppendData:(NSData *)data mimeType:(NSString *)mimeType fileName:(NSString *)fileName {
+    NSString *path = [self cacheFilePathWithMimeType:mimeType fileName:fileName];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:path];
+        [fileHandle seekToEndOfFile];
+        [fileHandle writeData:data];
+        [fileHandle closeFile];
+    }else{
+        [data writeToFile:path atomically:true];
+    }
+}
+
 #pragma mark - public
 
 + (void)cacheData:(YGXDCObject *)dco withKey:(NSString *)key {
     NSData *data = [dco cacheData];
     [[YGXDiskCache diskCache] cacheData:data withKey:key];
     [[YGXDiskCache diskCache] saveData:dco.originData mimeType:dco.mimeType fileName:[YGXUtils md5ForString:key]];
+}
+
++ (void)cacheAppendData:(YGXDCObject *)dco withKey:(NSString *)key {
+    NSData *data = [dco cacheData];
+    [[YGXDiskCache diskCache] cacheData:data withKey:key];
+    [[YGXDiskCache diskCache] saveAppendData:dco.originData mimeType:dco.mimeType fileName:[YGXUtils md5ForString:key]];
 }
 
 + (YGXDCObject *)getDataForKey:(NSString *)key {

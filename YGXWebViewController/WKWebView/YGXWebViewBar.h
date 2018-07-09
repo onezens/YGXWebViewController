@@ -15,6 +15,7 @@
 - (void)saveBtnClick:(UIButton *)sender;
 - (void)saveListBtnClick:(UIButton *)sender ;
 - (void)newBtnClick:(UIButton *)sender;
+- (void)refreshBtnClick:(UIButton *)sender;
 
 @end
 

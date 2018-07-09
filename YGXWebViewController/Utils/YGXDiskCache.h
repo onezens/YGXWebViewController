@@ -18,6 +18,7 @@
 
 + (instancetype)diskCacheObjWithData:(NSData *)data mimeType:(NSString *)mimeType;
 
+
 @end
 
 @interface YGXDiskCache : NSObject
@@ -25,6 +26,8 @@
 + (YGXDCObject *)getDataForKey:(NSString *)key;
 
 + (void)cacheData:(YGXDCObject *)dco withKey:(NSString *)key;
+
++ (void)cacheAppendData:(YGXDCObject *)dco withKey:(NSString *)key;
 
 + (void)removeDataForKey:(NSString *)key;
 

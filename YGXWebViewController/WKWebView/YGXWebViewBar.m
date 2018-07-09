@@ -41,5 +41,10 @@
         [self.delegate newBtnClick:sender];
     }
 }
+- (IBAction)refresh:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(refreshBtnClick:)]) {
+        [self.delegate refreshBtnClick:sender];
+    }
+}
 
 @end

@@ -8,6 +8,7 @@
 
 #import "YGXURLProtocol.h"
 #import "YGXDiskCache.h"
+#import "YGXUtils.h"
 
 static NSString * const KYGXURLProtocol = @"KYGXURLProtocol";
 
@@ -47,19 +48,26 @@ static NSString * const KYGXURLProtocol = @"KYGXURLProtocol";
     //给我们处理过的请求设置一个标识符, 防止无限循环,
     [NSURLProtocol setProperty:@YES forKey:KYGXURLProtocol inRequest:mutableReqeust];
     NSString *url = mutableReqeust.URL.absoluteString;
-    if ([YGXDiskCache containDataForKey:url]) {
+    NSString *range = [self.request.allHTTPHeaderFields valueForKey:@"Range"];
+    BOOL isNoCache = range && [range isEqualToString:@"bytes=0-1"];
+    isNoCache = isNoCache || ![YGXDiskCache containDataForKey:url];
+    if (!isNoCache) {
         YGXDCObject *dco = [YGXDiskCache getDataForKey:mutableReqeust.URL.absoluteString];
-        NSData* data = dco.originData;
+        NSData *data = data = dco.originData;
         NSURLResponse* response = [[NSURLResponse alloc] initWithURL:self.request.URL MIMEType:dco.mimeType expectedContentLength:data.length textEncodingName:nil];
         [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
         [self.client URLProtocol:self didLoadData:data];
         [self.client URLProtocolDidFinishLoading:self];
     }else{
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
-        self.task = [session dataTaskWithRequest:self.request];
-        [self.task resume];
+        [self startNewDownload:mutableReqeust];
     }
     
+}
+
+- (void)startNewDownload:(NSURLRequest *)request {
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
+    self.task = [session dataTaskWithRequest:request];
+    [self.task resume];
 }
 
 + (BOOL)isMediaSrc:(NSString *)url {
@@ -89,7 +97,7 @@ static NSString * const KYGXURLProtocol = @"KYGXURLProtocol";
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    [[self client] URLProtocol:self didLoadData:data];
+    [self.client URLProtocol:self didLoadData:data];
     if ([dataTask.response isKindOfClass:[NSHTTPURLResponse class]]) {
         NSHTTPURLResponse *res = (NSHTTPURLResponse *)dataTask.response;
         NSString *url = dataTask.originalRequest.URL.absoluteString;
@@ -98,9 +106,12 @@ static NSString * const KYGXURLProtocol = @"KYGXURLProtocol";
             [YGXDiskCache cacheData:dco withKey:url];
             return;
         }else if (res.statusCode == 206){
-            NSLog(@"range: %@", res.allHeaderFields);
-            [self.client URLProtocol:self didLoadData:data];
+            if (data.length != 2) {
+                YGXDCObject *dco = [YGXDCObject diskCacheObjWithData:data mimeType:res.MIMEType];
+                [YGXDiskCache cacheAppendData:dco withKey:url];
+            }
             return;
+           
         }
         NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"[didReceiveData Error] statusCode: %zd  data: %@", res.statusCode, dataStr);

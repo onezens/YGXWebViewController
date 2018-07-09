@@ -10,4 +10,6 @@
 
 @interface YGXUtils : NSObject
 + (NSString *)md5ForString:(NSString *)string;
++ (NSData *)convertHexStrToData:(NSString *)str;
++ (NSString *)convertDataToHexStr:(NSData *)data;
 @end

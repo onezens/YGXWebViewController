@@ -59,6 +59,11 @@ static NSUInteger const WebViewBarHeight = 44;
     
 }
 
+- (void)refreshBtnClick:(UIButton *)sender {
+    [self.webView stopLoading];
+    [self.webView reload];
+}
+
 
 #pragma mark - network
 
