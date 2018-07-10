@@ -156,19 +156,31 @@ static YGXDiskCache *_instance;
 
 #pragma mark - public
 
+//过滤url参数，防止参数不同而下载数据多次
++ (NSString *)filterKey:(NSString *)key {
+    NSRange range = [key rangeOfString:@"?"];
+    if (range.location == NSNotFound) {
+        return key;
+    }
+    return [key substringWithRange:NSMakeRange(0, range.location)];
+}
+
 + (void)cacheData:(YGXDCObject *)dco withKey:(NSString *)key {
+    key = [self filterKey:key];
     NSData *data = [dco cacheData];
     [[YGXDiskCache diskCache] cacheData:data withKey:key];
     [[YGXDiskCache diskCache] saveData:dco.originData mimeType:dco.mimeType fileName:[YGXUtils md5ForString:key]];
 }
 
 + (void)cacheAppendData:(YGXDCObject *)dco withKey:(NSString *)key {
+    key = [self filterKey:key];
     NSData *data = [dco cacheData];
     [[YGXDiskCache diskCache] cacheData:data withKey:key];
     [[YGXDiskCache diskCache] saveAppendData:dco.originData mimeType:dco.mimeType fileName:[YGXUtils md5ForString:key]];
 }
 
 + (YGXDCObject *)getDataForKey:(NSString *)key {
+    key = [self filterKey:key];
     NSData *data = [[YGXDiskCache diskCache] getDataForKey:key];
     YGXDCObject *dco = [YGXDCObject diskCacheObjWithCacheData:data];
     dco.originData = [[YGXDiskCache diskCache] getDataWithMimeType:dco.mimeType fileName:[YGXUtils md5ForString:key]];
@@ -176,10 +188,12 @@ static YGXDiskCache *_instance;
 }
 
 + (void)removeDataForKey:(NSString *)key {
+    key = [self filterKey:key];
     [[YGXDiskCache diskCache] removeDataForKey:key];
 }
 
 + (BOOL)containDataForKey:(NSString *)key {
+    key = [self filterKey:key];
     return [[YGXDiskCache diskCache] containDataForKey:key];
 }
 
