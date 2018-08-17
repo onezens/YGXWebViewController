@@ -10,15 +10,12 @@
 #import "YGXWebListController.h"
 #import "YGXURLProtocol.h"
 #import "NSURLProtocol+WebKitSupport.h"
+
 @interface AppDelegate ()
 
 @end
 
-
 @implementation AppDelegate
-
-
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [NSURLProtocol registerClass:[YGXURLProtocol class]];

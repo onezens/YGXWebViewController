@@ -36,7 +36,8 @@ static NSString * const KYGXURLProtocol = @"KYGXURLProtocol";
 
 //处理request请求
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request{
-    return request;
+
+    return nil;
 }
 
 + (BOOL)requestIsCacheEquivalent:(NSURLRequest *)a toRequest:(NSURLRequest *)b{

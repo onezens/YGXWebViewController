@@ -10,6 +10,8 @@
 #import <WebKit/WebKit.h>
 #import "YGXURLProtocol.h"
 #import "YGXWebViewBar.h"
+#import "YGXSettingCenter.h"
+
 
 static NSUInteger const kWKWebView_TimeOut = 60;
 static NSUInteger const WebViewBarHeight = 44;
@@ -18,6 +20,7 @@ static NSUInteger const WebViewBarHeight = 44;
 
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, weak) YGXWebViewBar *webBar;
+@property (nonatomic, copy) NSString *domain;
 
 @end
 
@@ -72,18 +75,31 @@ static NSUInteger const WebViewBarHeight = 44;
 
 - (void)setUrl:(NSString *)url {
     _url = url;
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:kWKWebView_TimeOut];
+    NSURL *uri =[NSURL URLWithString:url];
+    NSURLRequest *req = [NSURLRequest requestWithURL:uri cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:kWKWebView_TimeOut];
     [self.webView loadRequest:req];
+    self.domain = [self getDomainWithUrl:uri.host];
 }
 
+- (NSString *)getDomainWithUrl:(NSString *)urlStr {
+    NSArray *hostArr = [urlStr componentsSeparatedByString:@"."];
+    hostArr = [hostArr subarrayWithRange:NSMakeRange(hostArr.count-2, 2)];
+    return [hostArr componentsJoinedByString:@"."];
+}
 
 #pragma mark - WKNavigationDelegate
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
-//    NSURLRequest *request = navigationAction.request;
-    if(decisionHandler){
-        decisionHandler(WKNavigationActionPolicyAllow);
+    NSURLRequest *request = navigationAction.request;
+    NSString *domain = [self getDomainWithUrl:request.URL.host];
+    if ([YGXSettingCenter sharedCenter].enableExternalJump && ![domain isEqualToString:self.domain]) {
+        decisionHandler(WKNavigationActionPolicyCancel);
+        return;
     }
+    if (navigationAction.targetFrame == nil) {
+        [webView loadRequest:navigationAction.request];
+    }
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{

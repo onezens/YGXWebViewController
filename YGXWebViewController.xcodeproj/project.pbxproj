@@ -12,6 +12,9 @@
 		3533C60520F341C7004074D1 /* YGXWebViewBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3533C60420F341C7004074D1 /* YGXWebViewBar.m */; };
 		356B645B1FCD66C3005EF93D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356B64591FCD6678005EF93D /* MobileCoreServices.framework */; };
 		356B645C1FCD66C5005EF93D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356B64571FCD6593005EF93D /* WebKit.framework */; };
+		3584BDEB2126F0E800EC959F /* YGXSettingCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3584BDEA2126F0E800EC959F /* YGXSettingCenter.m */; };
+		3584BDEE2126F30800EC959F /* YGXSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3584BDED2126F30800EC959F /* YGXSettingController.m */; };
+		358B47692124535D0065B5CD /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 358B47682124535D0065B5CD /* data.json */; };
 		35B802071FC030D8007B24C0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B802061FC030D8007B24C0 /* AppDelegate.m */; };
 		35B8020F1FC030D8007B24C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B8020E1FC030D8007B24C0 /* Assets.xcassets */; };
 		35B802151FC030D8007B24C0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B802141FC030D8007B24C0 /* main.m */; };
@@ -32,6 +35,12 @@
 		3533C60420F341C7004074D1 /* YGXWebViewBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YGXWebViewBar.m; sourceTree = "<group>"; };
 		356B64571FCD6593005EF93D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		356B64591FCD6678005EF93D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3584BDE92126F0E800EC959F /* YGXSettingCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YGXSettingCenter.h; sourceTree = "<group>"; };
+		3584BDEA2126F0E800EC959F /* YGXSettingCenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YGXSettingCenter.m; sourceTree = "<group>"; };
+		3584BDEC2126F30800EC959F /* YGXSettingController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YGXSettingController.h; sourceTree = "<group>"; };
+		3584BDED2126F30800EC959F /* YGXSettingController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YGXSettingController.m; sourceTree = "<group>"; };
+		3584BDF52126F3DF00EC959F /* SettingVc.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingVc.storyboard; sourceTree = "<group>"; };
+		358B47682124535D0065B5CD /* data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		35B802021FC030D8007B24C0 /* YGXWebViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YGXWebViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35B802051FC030D8007B24C0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		35B802061FC030D8007B24C0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -113,10 +122,16 @@
 				35E119E220EDC7A200B30D26 /* WKWebView */,
 				35B802051FC030D8007B24C0 /* AppDelegate.h */,
 				35B802061FC030D8007B24C0 /* AppDelegate.m */,
+				358B47682124535D0065B5CD /* data.json */,
 				35B8020E1FC030D8007B24C0 /* Assets.xcassets */,
 				35B802201FC033BC007B24C0 /* LaunchScreen.storyboard */,
+				3584BDF52126F3DF00EC959F /* SettingVc.storyboard */,
 				35B802131FC030D8007B24C0 /* Info.plist */,
 				35B802141FC030D8007B24C0 /* main.m */,
+				3584BDE92126F0E800EC959F /* YGXSettingCenter.h */,
+				3584BDEA2126F0E800EC959F /* YGXSettingCenter.m */,
+				3584BDEC2126F30800EC959F /* YGXSettingController.h */,
+				3584BDED2126F30800EC959F /* YGXSettingController.m */,
 			);
 			path = YGXWebViewController;
 			sourceTree = "<group>";
@@ -221,6 +236,7 @@
 				3533C5FF20F34007004074D1 /* YGXWebBarView.xib in Resources */,
 				35B8020F1FC030D8007B24C0 /* Assets.xcassets in Resources */,
 				35B802211FC033BC007B24C0 /* LaunchScreen.storyboard in Resources */,
+				358B47692124535D0065B5CD /* data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,12 +268,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3584BDEB2126F0E800EC959F /* YGXSettingCenter.m in Sources */,
 				35B802151FC030D8007B24C0 /* main.m in Sources */,
 				35E119D820EC6DCB00B30D26 /* YGXWebListController.m in Sources */,
 				3533C5FD20EF7682004074D1 /* YGXUtils.m in Sources */,
 				3533C60520F341C7004074D1 /* YGXWebViewBar.m in Sources */,
 				35B8021D1FC03199007B24C0 /* YGXWebViewController.m in Sources */,
 				35B802071FC030D8007B24C0 /* AppDelegate.m in Sources */,
+				3584BDEE2126F30800EC959F /* YGXSettingController.m in Sources */,
 				35E119E120EDC28C00B30D26 /* NSURLProtocol+WebKitSupport.m in Sources */,
 				35E119E720EDCBFD00B30D26 /* YGXDiskCache.m in Sources */,
 				35E119DB20EC729500B30D26 /* YGXURLProtocol.m in Sources */,
@@ -399,14 +417,16 @@
 			baseConfigurationReference = 4C68788AD0436E1E0595BC81 /* Pods-YGXWebViewController.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = PK4EEXA626;
 				INFOPLIST_FILE = YGXWebViewController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cc.onezen.YGXBroswer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "dd1ec1b2-fb0e-4d40-a448-2a184cfcbe9c";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore *";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -9,10 +9,24 @@
 #import "YGXWebListController.h"
 #import "YGXWebViewController.h"
 
+@interface WebInfo:NSObject
+
+@property (nonatomic, copy) NSString  *url;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, assign) BOOL record;
+
+@end
+
+@implementation WebInfo
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key{}
+
+@end
+
 @interface YGXWebListController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, weak) UITableView *tableView;
-
+@property (nonatomic, strong) NSArray *dataArr;
 @end
 
 @implementation YGXWebListController
@@ -21,7 +35,30 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"WebList";
+    [self loadData];
     [self addTableView];
+    [self addSetting];
+}
+
+- (void)addSetting {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(goSetting)];
+}
+
+- (void)goSetting {
+    
+}
+
+- (void)loadData {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"data.json" ofType:nil];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    NSArray *metaArr = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    NSMutableArray *dataArrM = [NSMutableArray arrayWithCapacity:metaArr.count];
+    for (NSDictionary *dict in metaArr) {
+        WebInfo *info = [WebInfo new];
+        [info setValuesForKeysWithDictionary:dict];
+        [dataArrM addObject:info];
+    }
+    self.dataArr = dataArrM;
 }
 
 - (void)addTableView {
@@ -39,7 +76,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataArr.count;;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -49,22 +86,20 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%zd - %zd", indexPath.section, indexPath.row];
+    WebInfo *info = self.dataArr[indexPath.row];
+    cell.textLabel.text =  info.title;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     YGXWebViewController *webViewVc = [YGXWebViewController new];
-    if (indexPath.row % 2 ==0) {
-        webViewVc.url = @"http://www.baidu.com/";
-    }else{
-        webViewVc.url = @"http://www.onezen.cc/";
-    }
+    WebInfo *info = self.dataArr[indexPath.row];
+    webViewVc.url = info.url;
     [self.navigationController pushViewController:webViewVc animated:true];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
+    return 60;
 }
 
 @end

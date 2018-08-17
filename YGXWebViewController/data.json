@@ -1,0 +1,17 @@
+ [
+  {
+  "title": "Baidu",
+  "url": "http://www.baidu.com",
+  "record" : false
+  },
+  {
+  "title": "google",
+  "url": "http://www.google.com/",
+  "record" : false
+  },
+  {
+  "title": "Blog",
+  "url": "http://www.onezen.cc",
+  "record" : true
+  }
+  ]
