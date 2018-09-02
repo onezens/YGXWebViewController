@@ -9,7 +9,41 @@
 #import "YGXUtils.h"
 #import <CommonCrypto/CommonDigest.h>
 
+@interface YGXUtils()
+
+@end
+
 @implementation YGXUtils
+NSUInteger _oldTime;
+dispatch_queue_t _queue;
+NSMutableArray *_tasks;
+
++ (NSMutableArray *)tasks {
+
+    if(!_tasks){
+        _tasks = [NSMutableArray array];
+    }
+    return _tasks;
+}
+
++ (dispatch_queue_t)queue {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _queue = dispatch_queue_create("UTILS QUEUE", DISPATCH_QUEUE_CONCURRENT);
+    });
+    return _queue;
+}
++ (void)timeBegin {
+    _oldTime = [self msec_timestamp];
+    
+}
++ (NSUInteger)timeEnd {
+    return [self msec_timestamp] - _oldTime;
+}
+
++ (NSUInteger)msec_timestamp {
+    return (NSUInteger)[NSDate date].timeIntervalSince1970;
+}
 
 + (NSString *)md5ForString:(NSString *)string {
     const char *str = [string UTF8String];
@@ -89,6 +123,49 @@
     }];
     return string;
 }
+
++ (void)cancel {
+    NSLog(@"[cancen Tasks] count: %zd", [self tasks].count);
+    [[self tasks].copy enumerateObjectsUsingBlock:^(NSURLSessionDownloadTask * obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj cancel];
+    }];
+}
++ (void)resHeadersWithUrl:(NSString *)urlStr completion:(void (^)(NSDictionary *resHeaders))completion {
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    //只获取响应头 大概100ms就能返回
+    [request setHTTPMethod:@"HEAD"];
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    config.timeoutIntervalForRequest = 3;
+    config.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+    NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:config delegate:nil delegateQueue:[NSOperationQueue currentQueue]];
+    NSURLSessionDataTask *task = [urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        [[self tasks] removeObject:task];
+        NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
+        NSDictionary *allHeaderFields = res.allHeaderFields;
+        completion ? completion(allHeaderFields) : false;
+        if (error){
+            NSLog(@"[Head Error] URL: %@ \nError: %@", urlStr, error);
+        }
+    }];
+    [[self tasks] addObject:task];
+    [task resume];
+}
+
++ (NSDictionary *)resHeadersWithUrl:(NSString *)urlStr {
+    __block NSDictionary *headers = nil;
+    dispatch_sync([self queue], ^{
+        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+        [self resHeadersWithUrl:urlStr completion:^(NSDictionary *resHeaders) {
+            headers = resHeaders;
+            dispatch_semaphore_signal(sema);
+        }];
+        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+    });
+    return headers;
+}
+
+
 
 
 @end

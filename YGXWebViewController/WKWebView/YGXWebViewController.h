@@ -12,4 +12,6 @@
 
 @property (nonatomic, copy) NSString *url;
 
++ (instancetype)webViewVc;
+
 @end

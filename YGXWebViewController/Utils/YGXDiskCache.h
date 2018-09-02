@@ -23,6 +23,10 @@
 
 @interface YGXDiskCache : NSObject
 
++ (BOOL)ignoreUrl:(NSString *)url;
+
++ (void)addIgnoreUrl:(NSString *)url;
+
 + (YGXDCObject *)getDataForKey:(NSString *)key;
 
 + (void)cacheData:(YGXDCObject *)dco withKey:(NSString *)key;

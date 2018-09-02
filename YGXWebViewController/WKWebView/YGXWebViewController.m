@@ -11,6 +11,7 @@
 #import "YGXURLProtocol.h"
 #import "YGXWebViewBar.h"
 #import "YGXSettingCenter.h"
+#import "YGXUtils.h"
 
 
 static NSUInteger const kWKWebView_TimeOut = 60;
@@ -28,6 +29,15 @@ static NSUInteger const WebViewBarHeight = 44;
 
 #pragma mark - init
 
++ (instancetype)webViewVc {
+    static YGXWebViewController *webVc;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        webVc = [YGXWebViewController new];
+    });
+    return webVc;
+}
+
 #pragma mark - ui
 
 - (void)viewDidLoad {
@@ -43,6 +53,13 @@ static NSUInteger const WebViewBarHeight = 44;
     bar.delegate = self;
     _webBar = bar;
     [self.view addSubview:bar];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+}
+
+
+- (void)goBack {
+    [self.webView stopLoading];
+    [self.navigationController popViewControllerAnimated:true];
 }
 
 #pragma mark - webView event
@@ -53,13 +70,14 @@ static NSUInteger const WebViewBarHeight = 44;
     [self.webView goForward];
 }
 - (void)saveBtnClick:(UIButton *)sender {
-    
+    [YGXUtils cancel];
+    [self.webView stopLoading];
 }
 - (void)saveListBtnClick:(UIButton *)sender {
-    
+    NSLog(@"%s",__func__);
 }
 - (void)newBtnClick:(UIButton *)sender{
-    
+    [self loadRequestWithUrl:self.url];
 }
 
 - (void)refreshBtnClick:(UIButton *)sender {
@@ -73,12 +91,17 @@ static NSUInteger const WebViewBarHeight = 44;
 
 #pragma mark - event
 
-- (void)setUrl:(NSString *)url {
-    _url = url;
+- (void)loadRequestWithUrl:(NSString *)url {
     NSURL *uri =[NSURL URLWithString:url];
     NSURLRequest *req = [NSURLRequest requestWithURL:uri cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:kWKWebView_TimeOut];
     [self.webView loadRequest:req];
     self.domain = [self getDomainWithUrl:uri.host];
+}
+
+- (void)setUrl:(NSString *)url {
+    _url = url;
+    NSString *cacheUrl = [[NSUserDefaults standardUserDefaults] valueForKey:url];
+    [self loadRequestWithUrl:cacheUrl.length>0 ? cacheUrl : url];
 }
 
 - (NSString *)getDomainWithUrl:(NSString *)urlStr {
@@ -91,6 +114,7 @@ static NSUInteger const WebViewBarHeight = 44;
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
     NSURLRequest *request = navigationAction.request;
+    [[NSUserDefaults standardUserDefaults] setValue:request.URL.absoluteString forKey:self.url];
     NSString *domain = [self getDomainWithUrl:request.URL.host];
     if ([YGXSettingCenter sharedCenter].enableExternalJump && ![domain isEqualToString:self.domain]) {
         decisionHandler(WKNavigationActionPolicyCancel);
@@ -126,6 +150,7 @@ static NSUInteger const WebViewBarHeight = 44;
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error{
     NSLog(@"%s", __FUNCTION__);
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = false;
 }
 
 - (void)webView:(WKWebView *)webView didCommitNavigation:(null_unspecified WKNavigation *)navigation {
@@ -206,7 +231,7 @@ static NSUInteger const WebViewBarHeight = 44;
     
     if (!_webView) {
         _webView = [[WKWebView alloc] init];
-        _webView.backgroundColor = [UIColor orangeColor];
+        _webView.backgroundColor = [UIColor cyanColor];
         _webView.UIDelegate = self;
         _webView.navigationDelegate = self;
         _webView.frame = CGRectMake(0, 64.0f, self.view.bounds.size.width, self.view.bounds.size.height - 64.0f - WebViewBarHeight);

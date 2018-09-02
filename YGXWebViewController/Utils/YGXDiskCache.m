@@ -55,6 +55,7 @@
 
 @interface YGXDiskCache()
 @property (nonatomic, strong) YYDiskCache *metaDataCache;
+@property (nonatomic, strong) NSCache *ignoreUrlsMemCache;
 @end
 
 @implementation YGXDiskCache
@@ -72,6 +73,8 @@ static YGXDiskCache *_instance;
 
 - (void)initCache {
     _metaDataCache = [self createDiskCache];
+    _ignoreUrlsMemCache = [NSCache new];
+    _ignoreUrlsMemCache.countLimit = 100;
 }
 
 - (NSString *)cacheRootDirectory {
@@ -127,6 +130,23 @@ static YGXDiskCache *_instance;
     }
 }
 
++ (BOOL)ignoreUrl:(NSString *)url {
+    return [[YGXDiskCache diskCache] ignoreUrl:url];
+}
+
++ (void)addIgnoreUrl:(NSString *)url {
+    [[YGXDiskCache diskCache] addIgnoreUrl:url];
+}
+
+
+
+- (BOOL)ignoreUrl:(NSString *)url {
+    return [self.ignoreUrlsMemCache objectForKey:url];
+}
+
+- (void)addIgnoreUrl:(NSString *)url {
+    [self.ignoreUrlsMemCache setObject:@1 forKey:url];
+}
 - (NSData *)getDataWithLocalPath:(NSString *)localPath {
     NSData *data = [NSData dataWithContentsOfFile:localPath];
     return data;

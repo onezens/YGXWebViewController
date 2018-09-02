@@ -21,6 +21,7 @@
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key{}
 
+
 @end
 
 @interface YGXWebListController ()<UITableViewDelegate, UITableViewDataSource>
@@ -92,7 +93,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    YGXWebViewController *webViewVc = [YGXWebViewController new];
+    YGXWebViewController *webViewVc = [YGXWebViewController webViewVc];
     WebInfo *info = self.dataArr[indexPath.row];
     webViewVc.url = info.url;
     [self.navigationController pushViewController:webViewVc animated:true];
